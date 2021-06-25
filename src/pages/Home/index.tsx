@@ -1,17 +1,17 @@
-import { FormEvent,useState } from "react"
+import { FormEvent, useState } from "react"
 import { useHistory } from "react-router-dom"
 
-import { useAuth } from "../hooks/useAuth"
+import { useAuth } from "../../hooks/useAuth"
 
-import { database } from "../services/firebase"
+import { database } from "../../services/firebase"
 
-import { Button } from "../components/Button"
+import { Button } from "../../components/Button"
 
-import IlustrationIMG from "../assets/images/illustration.svg"
-import LogoImg from "../assets/images/logo.svg"
-import googleIconImg from "../assets/images/google-icon.svg"
+import IlustrationIMG from "../../assets/images/illustration.svg"
+import LogoImg from "../../assets/images/logo.svg"
+import googleIconImg from "../../assets/images/google-icon.svg"
 
-import "../styles/auth.scss"
+import "../../styles/auth.scss"
 
 export function Home() {
   const history = useHistory()
@@ -25,11 +25,16 @@ export function Home() {
 
   async function handleJoinRoom(event: FormEvent) {
     event.preventDefault()
-    if(roomCode.trim() === "") return;
+    if (roomCode.trim() === "") return;
     const RoomRef = await database.ref(`rooms/${roomCode}`).get()
 
-    if(!RoomRef.exists()) {
+    if (!RoomRef.exists()) {
       alert("Room does not exist.")
+      return
+    }
+
+    if(RoomRef.val().endDate) {
+      alert("Room alread closed.")
       return
     }
 
@@ -56,7 +61,7 @@ export function Home() {
               type="text"
               placeholder="Digite o código da sala"
               onChange={event => setRoomCode(event.target.value)}
-              value= {roomCode}
+              value={roomCode}
             />
             <Button type="submit">Entrar na sala</Button>
           </form>
