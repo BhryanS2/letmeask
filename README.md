@@ -3,7 +3,7 @@
 </p>
 
 <h1 align="center">
-    <img alt="Letmeask" src=".github/capa.png" />
+    <img alt="Letmeask" src=".github/capa.svg" width="800px"/>
 </h1>
 
 <br>
