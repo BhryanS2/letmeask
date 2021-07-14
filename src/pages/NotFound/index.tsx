@@ -1,14 +1,14 @@
 import LogoImg from "../../assets/images/logo.svg";
 import NotFoundImg from "../../assets/images/empty-questions.svg";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import "./styles.scss";
 import { Button } from "../../components/Button";
 
 export function NotFound() {
-  const history = useHistory()
+  const history = useHistory();
   function gotoHome() {
-    history.push("/")
+    history.push("/");
   }
   return (
     <div id="NotFound">
@@ -17,9 +17,9 @@ export function NotFound() {
           <img src={LogoImg} alt="Logo" />
         </div>
         <div>
-            <Button isOutlined onClick={gotoHome}>
-              Página inicial
-            </Button>
+          <Button isOutlined onClick={gotoHome}>
+            Página inicial
+          </Button>
         </div>
       </header>
       <main>

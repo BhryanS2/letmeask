@@ -52,28 +52,27 @@
     button {
       border: none;
       padding: 1rem;
-      border-radius: .5rem;
+      border-radius: 0.5rem;
 
       font-family: "Roboto";
       font-size: 1.2rem;
       font-weight: normal;
 
-      background: #DBDCDD;
+      background: #dbdcdd;
 
-      transition: filter .2s;
-      &:hover { 
+      transition: filter 0.2s;
+      &:hover {
         filter: brightness(0.8);
       }
 
-      &:first-child{
-        background-color: #DBDCDD;
+      &:first-child {
+        background-color: #dbdcdd;
       }
 
       &:last-child {
-        background-color: #E73F5D;
-        color: #FEFEFE;
+        background-color: #e73f5d;
+        color: #fefefe;
       }
     }
   }
-
 }

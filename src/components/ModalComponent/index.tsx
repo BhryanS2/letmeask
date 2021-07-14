@@ -10,7 +10,6 @@ type ModalProps = {
 };
 
 export function ModalComponent(props: ModalProps) {
-
   return (
     <div className="Modal">
       <div className="ModalContainer">

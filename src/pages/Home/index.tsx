@@ -1,39 +1,44 @@
-import { FormEvent, useState } from "react"
-import { useHistory } from "react-router-dom"
+import { FormEvent, useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import { useAuth } from "../../hooks/useAuth"
-import { RoomExists } from "../../hooks/RoomIsOpen"
+import { useAuth } from "../../hooks/useAuth";
+import { RoomExists } from "../../hooks/RoomIsOpen";
 
-import { Button } from "../../components/Button"
+import { Button } from "../../components/Button";
 
-import IlustrationIMG from "../../assets/images/illustration.svg"
-import LogoImg from "../../assets/images/logo.svg"
-import googleIconImg from "../../assets/images/google-icon.svg"
+import IlustrationIMG from "../../assets/images/illustration.svg";
+import LogoImg from "../../assets/images/logo.svg";
+import googleIconImg from "../../assets/images/google-icon.svg";
 
-import "../../styles/auth.scss"
+import "../../styles/auth.scss";
 
 export function Home() {
-  const history = useHistory()
-  const [roomCode, setRoomCode] = useState("")
-  const { SignInWithGoogle, user } = useAuth()
+  const history = useHistory();
+  const [roomCode, setRoomCode] = useState("");
+  const { SignInWithGoogle, user } = useAuth();
 
   async function HandleCriateRoom() {
-    if (!user) await SignInWithGoogle()
-    history.push("/rooms/new")
+    if (!user) await SignInWithGoogle();
+    history.push("/rooms/new");
   }
 
   async function handleJoinRoom(event: FormEvent) {
-    event.preventDefault()
+    event.preventDefault();
     if (roomCode.trim() === "") return;
-    RoomExists(roomCode, "/NotFund")
-
-    history.push(`/rooms/${roomCode}`)
+    if (await RoomExists(roomCode)) {
+      history.push("/NotFound");
+      return;
+    }
+    history.push(`/rooms/${roomCode}`);
   }
 
   return (
     <div id="page-auth">
       <aside>
-        <img src={IlustrationIMG} alt="Ilustração simbolizando perguntas e resposta" />
+        <img
+          src={IlustrationIMG}
+          alt="Ilustração simbolizando perguntas e resposta"
+        />
         <strong>Crei salas de Q&amp;A ao-vivo</strong>
         <p>Tire as dúvidas da sua audiencia em tempo real</p>
       </aside>
@@ -49,7 +54,7 @@ export function Home() {
             <input
               type="text"
               placeholder="Digite o código da sala"
-              onChange={event => setRoomCode(event.target.value)}
+              onChange={(event) => setRoomCode(event.target.value)}
               value={roomCode}
             />
             <Button type="submit">Entrar na sala</Button>
@@ -57,5 +62,5 @@ export function Home() {
         </div>
       </main>
     </div>
-  )
+  );
 }

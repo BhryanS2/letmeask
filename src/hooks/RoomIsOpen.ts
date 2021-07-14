@@ -1,11 +1,10 @@
 import { database } from "../services/firebase";
-import { useHistory } from "react-router-dom";
 
-export const RoomExists = async (RoomId: string, redirect: string) => {
-  const history = useHistory()
-  const RoomRef = await database.ref(`rooms/${RoomId}`).get();
-  if (!RoomRef.exists() || RoomRef.val().endDate) {
-    history.push(redirect);
-    return;
+export const RoomExists = async (RoomId: string) => {
+  try {
+    const RoomRef = await database.ref(`rooms/${RoomId}`).get();
+    return !RoomRef.exists() || RoomRef.val().endDate;
+  } catch (error) {
+    console.error(error);
   }
 };

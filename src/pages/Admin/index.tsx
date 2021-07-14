@@ -3,6 +3,8 @@ import { useState } from "react";
 
 import { useRoom } from "../../hooks/useRoom";
 import { RoomExists } from "../../hooks/RoomIsOpen";
+import { useAuth } from "../../hooks/useAuth";
+
 import { database } from "../../services/firebase";
 
 import { Button } from "../../components/Button";
@@ -18,6 +20,7 @@ import CloseRoomIcon from "../../assets/images/CloseRoom.svg";
 import CloseQuestionIcon from "../../assets/images/ExcludeQuestion.svg";
 
 import "../../styles/AdmRoomAndRoomQuestion.scss";
+import { useEffect } from "react";
 
 type RoomParams = {
   id: string;
@@ -25,15 +28,29 @@ type RoomParams = {
 
 export function AdminRoom() {
   const history = useHistory();
+  const user = useAuth();
   const params = useParams<RoomParams>();
   const roomId = params.id;
   const { title, questions } = useRoom(roomId);
-  const [isOpenModalQuestion, setIsOpenModalQuestion] = useState<boolean>(false);
-  const [isOpenModalEndRoom, setIsOpenModalEndRoom] = useState<boolean>(false);
+
+  //states
+  const [isOpenQuestion, setisOpenQuestion] = useState<boolean>(false);
+  const [isOpenEndRoom, setisOpenEndRoom] = useState<boolean>(false);
   const [ModalQuestionID, setModalQuestionID] = useState<string>("");
-  const toggleModalQuestion = () => setIsOpenModalQuestion(!isOpenModalQuestion);
-  const toggleModalEndRoom = () => setIsOpenModalEndRoom(!isOpenModalEndRoom);
-  RoomExists(roomId, "/")
+
+  //toggle
+  const toggleModalQuestion = () => setisOpenQuestion(!isOpenQuestion);
+  const toggleModalEndRoom = () => setisOpenEndRoom(!isOpenEndRoom);
+
+  useEffect(() => {
+    async function exists() {
+      if ((await RoomExists(roomId)) || !user.user) {
+        history.push("/");
+        return;
+      }
+    }
+    exists();
+  }, [roomId, user.user, history]);
 
   async function handleEndRoom() {
     await database.ref(`rooms/${roomId}`).update({
@@ -44,7 +61,7 @@ export function AdminRoom() {
 
   async function handleDeleteQuestion(questionId: string) {
     await database.ref(`rooms/${roomId}/questions/${questionId}`).remove();
-    setIsOpenModalQuestion(false);
+    setisOpenQuestion(false);
   }
 
   async function handleHighligthQuestion(questionId: string) {
@@ -64,7 +81,7 @@ export function AdminRoom() {
         <div className="content">
           <img src={logoImg} alt="letmeask" />
           <div>
-            {isOpenModalEndRoom ? (
+            {isOpenEndRoom ? (
               <ModalComponent
                 questionID={ModalQuestionID}
                 toggle={toggleModalEndRoom}
@@ -94,7 +111,7 @@ export function AdminRoom() {
           {questions.length > 0 && <span>{questions.length} pergunta(s)</span>}
         </div>
         <div className="questionList">
-          {isOpenModalQuestion ? (
+          {isOpenQuestion ? (
             <ModalComponent
               questionID={ModalQuestionID}
               toggle={toggleModalQuestion}

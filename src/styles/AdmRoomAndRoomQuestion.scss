@@ -108,6 +108,22 @@
   }
 }
 
-@media(max-width: 1000px) {
-  
+@media (max-width: 1000px) {
+  #pageRoom {
+    header {
+      padding: 12px;
+    }
+
+    .content {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-around;
+
+      > div {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
 }
