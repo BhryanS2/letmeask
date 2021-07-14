@@ -2,8 +2,7 @@ import { FormEvent, useState } from "react"
 import { useHistory } from "react-router-dom"
 
 import { useAuth } from "../../hooks/useAuth"
-
-import { database } from "../../services/firebase"
+import { RoomExists } from "../../hooks/RoomIsOpen"
 
 import { Button } from "../../components/Button"
 
@@ -26,17 +25,7 @@ export function Home() {
   async function handleJoinRoom(event: FormEvent) {
     event.preventDefault()
     if (roomCode.trim() === "") return;
-    const RoomRef = await database.ref(`rooms/${roomCode}`).get()
-
-    if (!RoomRef.exists()) {
-      alert("Room does not exist.")
-      return
-    }
-
-    if(RoomRef.val().endDate) {
-      alert("Room alread closed.")
-      return
-    }
+    RoomExists(roomCode, "/NotFund")
 
     history.push(`/rooms/${roomCode}`)
   }

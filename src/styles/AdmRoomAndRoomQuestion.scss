@@ -19,7 +19,7 @@
       display: flex;
       gap: 1rem;
 
-      button {
+      > button {
         height: 40px;
       }
     }
@@ -106,4 +106,8 @@
       margin-top: 32px;
     }
   }
+}
+
+@media(max-width: 1000px) {
+  
 }

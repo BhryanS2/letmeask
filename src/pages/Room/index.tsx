@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react"
 import { useParams } from "react-router-dom"
 
 import { useAuth } from "../../hooks/useAuth"
+import { RoomExists } from "../../hooks/RoomIsOpen"
 
 import { database } from "../../services/firebase"
 
@@ -23,7 +24,7 @@ export function Room() {
   const [newQuestion, setNewQuestion] = useState("")
   const roomId = params.id
   const { title, questions } = useRoom(roomId)
-
+  RoomExists(roomId, "/NotFound")
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault()

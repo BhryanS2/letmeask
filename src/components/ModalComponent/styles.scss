@@ -1,0 +1,79 @@
+.Modal {
+  position: fixed;
+  z-index: 5;
+  inset: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.87);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ModalContainer {
+  position: absolute;
+  border: 1px solid #f3f3f3;
+  background: #fff;
+  border-radius: 2rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    max-height: 50px;
+  }
+
+  h1 {
+    margin-top: 24px;
+    margin-bottom: 12px;
+    font-size: 2rem;
+    font-family: "Poppins";
+    font-weight: bold;
+    text-align: center;
+    color: #29292e;
+  }
+
+  p {
+    color: #737380;
+    font-family: "Roboto";
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+
+  .ButtonsModal {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+    width: 50%;
+    button {
+      border: none;
+      padding: 1rem;
+      border-radius: .5rem;
+
+      font-family: "Roboto";
+      font-size: 1.2rem;
+      font-weight: normal;
+
+      background: #DBDCDD;
+
+      transition: filter .2s;
+      &:hover { 
+        filter: brightness(0.8);
+      }
+
+      &:first-child{
+        background-color: #DBDCDD;
+      }
+
+      &:last-child {
+        background-color: #E73F5D;
+        color: #FEFEFE;
+      }
+    }
+  }
+
+}
