@@ -28,7 +28,7 @@ type RoomParams = {
 
 export function AdminRoom() {
   const history = useHistory();
-  const user = useAuth();
+  const {user} = useAuth();
   const params = useParams<RoomParams>();
   const roomId = params.id;
   const { title, questions } = useRoom(roomId);
@@ -44,13 +44,13 @@ export function AdminRoom() {
 
   useEffect(() => {
     async function exists() {
-      if ((await RoomExists(roomId)) || !user.user) {
+      if ((await RoomExists(roomId)) || user?.name === undefined) {
         history.push("/");
         return;
       }
     }
     exists();
-  }, [roomId, user.user, history]);
+  }, [roomId, user, history]);
 
   async function handleEndRoom() {
     await database.ref(`rooms/${roomId}`).update({
